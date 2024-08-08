@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "groupvault"
+version = "0.1.0"
+description = "A Python Telegram Bot for purchasing groups with a resting period."
+license = "MIT"
+authors = ["Alexandr Ostaenkov <al.ostaenkov@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.10.0"
+sqlalchemy = "^2.0.31"
+aiosqlite = "^0.20.0"
+telethon = "^1.36.0"
+pydantic-settings = "^2.3.4"
+aiohttp = "^3.9.5"
+fastapi = "^0.111.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
