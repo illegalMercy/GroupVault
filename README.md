@@ -6,97 +6,103 @@
   <h3 align="center">GroupVault</h3>
 
   <p align="center">
-    Телеграм бот для продажи групп с отлёжкой
+    Telegram bot for selling groups with a resting period
   </p>
+  <a href="https://github.com/illegalMercy/GroupVault/blob/main/README.md">
+    <img src="https://img.shields.io/badge/lang-en-blue.svg" alt='en'></img>
+  </a>
+  <a href="https://github.com/illegalMercy/GroupVault/blob/main/README.ru.md">
+    <img src="https://img.shields.io/badge/язык-ru-green.svg" alt='ru'></img>
+  </a>
 </div>
 
-## Содержание
-- [Описание](#-описание)
-  - [Возможности](#возможности) 
-- [Технологии](#%EF%B8%8F-технологии)
-- [Установка](#-установка)
-  - [Настройка проекта](#настройка-проекта)
-  - [Запуск как сервис Systemd](#запуск-как-сервис-systemd)
-- [Настройка оплаты](#-настройка-оплаты)
-  - [Настройка Nginx](#настройка-nginx)
-  - [Настройка HTTP-уведомлений YooMoney](#настройка-http-уведомлений-yoomoney) 
-- [Контакты](#%EF%B8%8F-контакты)
-- [Лицензия](#-лицензия)
+## Table of Contents
+- [About](#-about)
+  - [Features](#features) 
+- [Technologies](#%EF%B8%8F-technologies)
+- [Installation](#-installation)
+  - [Project Setup](#project-setup)
+  - [Running as a Systemd Service](#running-as-a-systemd-service)
+- [Payment Setup](#-payment-setup)
+  - [Nginx Setup](#nginx-setup)
+  - [YooMoney HTTP Notification Setup](#yoomoney-http-notification-setup) 
+- [Contacts](#%EF%B8%8F-contacts)
+- [License](#-license)
 
-## 💡 Описание
+## 💡 About
 
-Python телеграм-бот, который позволяет продавать телеграм-группы с определённым сроком отлёжки. Бот выполняет роль магазина, где пользователи могут выбирать и приобретать группы. Оплата осуществляется через сервис [YooMoney](https://yoomoney.ru).
+GroupVault is a Python Telegram bot designed for selling Telegram groups with a resting period. The bot serves as a store where users can browse and purchase groups. Payments are handled through the [YooMoney](https://yoomoney.ru) service.
 
-###  Возможности
+### Features
 
-**Бот**:
-  - Отправка пригласительной ссылки, после оплаты.
-  - Передача права владения группой.
-  - Определение возраста групп.
+**Bot**:
+  - Sends an invitation link after payment.
+  - Transfers group ownership.
+  - Determines the age of groups.
 
-**Пользователь**:
-  - Выбор и покупка групп с необходимым сроком отлёжки.
-  - Оплата с помощью платежей YooMoney.
-  
-**Администратор**:
-  - Загрузка телеграм аккаунтов для последующего выбора групп, которыми они владеют.
-  - Выбор папки аккаунта, из которой будут загружены группы и выставлены на продажу.
-  - Изменение и добавление цены для определенного срока отлёжки группы.
+**User**:
+  - Selects and buys groups with a desired resting period.
+  - Pays via YooMoney.
 
-## 🛠️ Технологии
+**Admin**:
+  - Uploads Telegram accounts to select and sell the groups they own.
+  - Chooses the account folder from which groups will be uploaded and listed for sale.
+  - Changes and adds prices for specific resting periods.
 
-**Язык**: Python 3.12
+## 🛠️ Technologies
 
-**Библиотеки**:
-- [aiogram](https://pypi.org/project/aiogram/) - для работы с Telegram Bot API.
-- [telethon](https://pypi.org/project/Telethon/) - для взаимодействия с Telegram Client API.
-- [sqlalchemy](https://pypi.org/project/SQLAlchemy/) - для работы с базой данных через ORM.
-- [aiosqlite](https://pypi.org/project/aiosqlite/) - для асинхронной работы с SQLite.
-- [fastapi](https://pypi.org/project/fastapi/) - для создания веб-хука оплаты через YooMoney.
+**Language**: Python 3.12
 
-## 🚀 Установка 
+**Libraries**:
+- [aiogram](https://pypi.org/project/aiogram/) - for working with the Telegram Bot API.
+- [telethon](https://pypi.org/project/Telethon/) - for interacting with the Telegram Client API.
+- [sqlalchemy](https://pypi.org/project/SQLAlchemy/) - for ORM database interaction.
+- [aiosqlite](https://pypi.org/project/aiosqlite/) - for asynchronous SQLite operations.
+- [fastapi](https://pypi.org/project/fastapi/) - for creating the YooMoney payment webhook.
 
-### Настройка проекта 
+## 🚀 Installation 
 
-1. Клонируйте репозиторий:
+### Project Setup 
+
+1. Clone the repository:
 ```bash
 git clone https://github.com/illegalMercy/GroupVault.git
 ```
 
-2. Перейдите в директорию проекта:
+2. Navigate to the project directory:
 ```bash
 cd GroupVault
 ```
 
-3. Создайте и активируйте виртуальное окружение:
+3. Create and activate a virtual environment:
 ```bash
-# Создание
+# Create
 python -m venv venv
 
-# Активация
+# Activate
 source venv/bin/activate
 ```
 
-4. Установите необходимые зависимости:
+4. Install the required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-5. Настройте переменные окружения. Используйте `.env_sample` в качестве шаблона:
-- `BOT_TOKEN`: [Токен вашего телеграм-бота](https://t.me/BotFather).
-- `YOOMONEY_SECRET_KEY`: [Секретный ключ для платежей YooMoney](https://yoomoney.ru/transfer/myservices/http-notification).
-- `YOOMONEY_WALLET_ID:` Номер кошелька YooMoney.
-- `SQLITE_DATABASE_PATH`: Путь к файлу базы данных SQLite.
-- `ADMIN_ID`: Телеграм ID пользователя-администратора бота.
+5. Configure the environment variables. Use `env_sample` as a template:
+- `BOT_TOKEN`: [Your Telegram bot token](https://t.me/BotFather).
+- `YOOMONEY_SECRET_KEY`: [YooMoney payment secret key](https://yoomoney.ru/transfer/myservices/http-notification).
+- `YOOMONEY_WALLET_ID:` YooMoney wallet number.
+- `SQLITE_DATABASE_PATH`: Path to the SQLite database file.
+- `ADMIN_ID`: Telegram ID of the bot's administrator.
 
-6. Запустите бота:
+6. Start the bot:
 ```bash
 python main.py
 ```
 
-### Запуск как сервис Systemd
+### Running as a Systemd Service
 
-1. Создайте файл сервиса systemd. Например, `group_vault.service`:
+1. Create a systemd service file, for example, `group_vault.service`:
 ```bash
 sudo vim /etc/systemd/system/group_vault.service
 ```
@@ -119,33 +125,33 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
-- `Description`: Описание сервиса. В данном случае, это “Group Vault Bot”, что помогает идентифицировать сервис.
-- `WorkingDirectory`: Рабочая директория, в которой будет выполняться сервис.
-- `Environment`:  В данном случае, это путь к виртуальному окружению проекта.
-- `ExecStart`: - Команда, которая будет выполнена для запуска сервиса.
+- `Description`: A description of the service. In this case, "Group Vault Bot" to identify the service.
+- `WorkingDirectory`: The working directory where the service will run.
+- `Environment`: The path to the project's virtual environment.
+- `ExecStart`: The command to start the service.
 
-2.  Перезагрузите systemd, чтобы применить изменения:
+2. Reload systemd to apply the changes:
 ```bash
 sudo systemctl daemon-reload
 ```
 
-3. Запустите сервис и добавьте его в автозагрузку:
+3. Start the service and enable it to run on startup:
 ```bash
 sudo systemctl start group_vault.service
 sudo systemctl enable group_vault.service
 ```
 
-## 💳 Настройка оплаты
+## 💳 Payment Setup
 
-### Настройка Nginx
+### Nginx Setup
 
-1. Для начала установите **Nginx**, если он еще не установлен:
+1. First, install **Nginx** if it is not already installed:
 ```bash
 sudo apt update
 sudo apt install nginx
 ```
 
-2. Создайте новый файл конфигурации. Например, `group_vault_payment`:
+2. Create a new configuration file, for example, `group_vault_payment`:
 ```bash
 sudo vim /etc/nginx/sites-available/group_vault_payment
 ```
@@ -153,7 +159,7 @@ sudo vim /etc/nginx/sites-available/group_vault_payment
 ```nginx
 server {
     listen 80;
-    server_name ваш_домен_или_IP; 
+    server_name your_domain_or_IP; 
 
     location / {
         proxy_pass http://127.0.0.1:8000;
@@ -165,40 +171,40 @@ server {
 }
 ```
 
-> **Примечание**:
-> По умолчанию веб-хук для получения уведомлений о платежах использует порт `8000`
+> **Note**:
+> By default, the webhook for receiving payment notifications uses port `8000`.
 
-3. Создайте символическую ссылку на файл конфигурации в каталоге `sites-enabled`:
+3. Create a symbolic link to the configuration file in the `sites-enabled` directory:
 ```bash
 sudo ln -s /etc/nginx/sites-available/group_vault_payment /etc/nginx/sites-enabled
 ```
 
-4. Проверьте конфигурацию на наличие ошибок и перезапустите Nginx:
+4. Check the configuration for errors and restart Nginx:
 ```bash
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### Настройка HTTP-уведомлений YooMoney
+### YooMoney HTTP Notification Setup
 
-1. Перейдите на [страницу настройки HTTP-уведомлений](https://yoomoney.ru/transfer/myservices/http-notification) YooMoney.
+1. Go to the [YooMoney HTTP Notification settings page](https://yoomoney.ru/transfer/myservices/http-notification).
 
-2. Вставьте ваш IP-адрес в поле `Куда отправлять (URL сайта)` и добавьте `/payment`. Например: `http://123.123.123.123/payment`
+2. Enter your IP address in the `Where to send (site URL)` field and add `/payment`. For example: `http://123.123.123.123/payment`
 
->**Примечание**:
->По умолчанию веб-хук для получения уведомлений о платежах использует эндпоинт `/payment`
+>**Note**:
+>The default webhook endpoint for receiving payment notifications is `/payment`.
 
-3. Получите секрет для проверки подлинности HTTP-уведомлений, нажав `Показать секрет`. Его требуется указать в переменных окружения.
+3. Retrieve the secret for authenticating HTTP notifications by clicking `Show secret`. This needs to be specified in the environment variables.
 
-4. Включите опцию `Отправлять HTTP-уведомления` и нажмите `Готово`.
+4. Enable the `Send HTTP notifications` option and click `Done`.
 
-[Подробнее о том, как работают HTTP-уведомления](https://yoomoney.ru/docs/wallet/using-api/notification-p2p-incoming)
+[Learn more about how HTTP notifications work](https://yoomoney.ru/docs/wallet/using-api/notification-p2p-incoming)
 
-## 🗨️ Контакты
+## 🗨️ Contacts
 
 - **Email**:  [al.ostaenkov@gmail.com](al.ostaenkov@gmail.com)
 - **Telegram**:  [@illegalMercy](https://t.me/illegalMercy)
 
-## 📃 Лицензия
+## 📃 License
 
-Этот проект лицензирован на условиях лицензии MIT. Подробности см. в файле [LICENSE](link).
+This project is licensed under the MIT License. See the [LICENSE](link) file for details.
