@@ -207,4 +207,4 @@ sudo systemctl restart nginx
 
 ## 📃 License
 
-This project is licensed under the MIT License. See the [LICENSE](link) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/illegalMercy/GroupVault/blob/main/LICENSE) file for details.
